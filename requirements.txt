@@ -5,4 +5,4 @@ pytest
 flask-logging
 flask-swagger
 flask-swagger-ui
-flask-restful
+flask_restx

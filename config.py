@@ -11,6 +11,6 @@ class Config:
         SWAGGER_URL,
         API_URL,
         config={
-            'app_name': "My API"
+            'app_name': 'My API'
         }
     )
