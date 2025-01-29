@@ -3,6 +3,4 @@ flask-sqlalchemy
 flask-testing 
 pytest 
 flask-logging
-flask-swagger
-flask-swagger-ui
 flask_restx

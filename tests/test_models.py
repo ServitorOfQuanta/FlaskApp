@@ -8,8 +8,8 @@ from models import db, Contact  # Import your app and models
 def client():
     app = create_app()
     app.config.update(
-        SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:',  # In-memory database for testing
-        SQLALCHEMY_TRACK_MODIFICATIONS = False
+        SQLALCHEMY_DATABASE_URI="sqlite:///:memory:",  # In-memory database for testing
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
     with app.app_context():
         db.create_all()
@@ -23,25 +23,25 @@ def client():
 
 
 def test_create_contact(client):
-    '''Test creating a contact with valid data.'''
+    """Test creating a contact with valid data."""
     contact_data = {
-        'name': 'Some Person',
-        'description': 'A description.',
-        'phoneNumber': '+123456789012'
+        "name": "Some Person",
+        "description": "A description.",
+        "phoneNumber": "+123456789012",
     }
 
-    response = client.post('/api/contacts', json=contact_data)
+    response = client.post("/Contacts/api", json=contact_data)
     assert response.status_code == 201  # Expect a successful creation (201 Created)
 
     # Check that the contact is added to the database
     contact = Contact.query.first()
-    assert contact.name == 'Some Person'
-    assert contact.phone_number == '+123456789012'
+    assert contact.name == "Some Person"
+    assert contact.phone_number == "+123456789012"
 
 
 def test_invalid_phone_number(client):
-    '''Test phone number validation with an invalid phone number.'''
-    invalid_phone_number = '12345'  # Invalid phone number format
+    """Test phone number validation with an invalid phone number."""
+    invalid_phone_number = "12345"  # Invalid phone number format
 
     # We simulate the phone number validation method here
     is_valid = Contact.validate_phone_number(invalid_phone_number)
@@ -49,8 +49,8 @@ def test_invalid_phone_number(client):
 
 
 def test_valid_phone_number(client):
-    '''Test phone number validation with a valid phone number.'''
-    valid_phone_number = '+123456789012'  # Valid phone number format
+    """Test phone number validation with a valid phone number."""
+    valid_phone_number = "+123456789012"  # Valid phone number format
 
     # We simulate the phone number validation method here
     is_valid = Contact.validate_phone_number(valid_phone_number)
@@ -58,29 +58,29 @@ def test_valid_phone_number(client):
 
 
 def test_create_contact_invalid_phone_number(client):
-    '''Test creating a contact with an invalid phone number.'''
+    """Test creating a contact with an invalid phone number."""
     contact_data = {
-        'name': 'Some Person',
-        'description': 'A description.',
-        'phone_number': '12345'  # Invalid phone number
+        "name": "Some Person",
+        "description": "A description.",
+        "phone_number": "12345",  # Invalid phone number
     }
 
-    response = client.post('/api/contacts', json=contact_data)
+    response = client.post("/Contacts/api", json=contact_data)
     assert response.status_code == 400  # Expect a Bad Request (400) error
 
     data = response.get_json()
-    assert 'error' in data  # Expect an error message
+    assert "error" in data  # Expect an error message
 
 
 def test_create_contact_missing_phone_number(client):
-    '''Test creating a contact with a missing phone number.'''
+    """Test creating a contact with a missing phone number."""
     contact_data = {
-        'name': 'Some Person',
-        'description': 'A description.',
-        'phone_number': ''  # Missing phone number
+        "name": "Some Person",
+        "description": "A description.",
+        "phone_number": "",  # Missing phone number
     }
 
-    response = client.post('/api/contacts', json=contact_data)
+    response = client.post("/Contacts/api", json=contact_data)
     assert response.status_code == 400  # Expect a Bad Request (400) error
     data = response.get_json()
-    assert 'error' in data  # Expect an error message
+    assert "error" in data  # Expect an error message
