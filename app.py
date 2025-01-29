@@ -14,7 +14,6 @@ def create_app():
         title="Contacts API",
         description="A small Flask-based API for adding contacts to a SQLite server.",
     )
-    # swag = swagger(app)
     db.init_app(app)
     with app.app_context():
         db.create_all()
@@ -59,23 +58,23 @@ def create_app():
 
                 # Validate name
                 if not name:
-                    logger.error(f"Error creating contact: Name missing")
+                    logger.error("Error creating contact: Name missing")
                     return {"error": "Name is required"}, 400
 
                 # Validate phone number
                 if not phone_number:
-                    logger.error(f"Error creating contact: Phone number missing")
+                    logger.error("Error creating contact: Phone number missing")
                     return {"error": "Phone number is required"}, 400
                 elif phone_number[0] != "+":
                     logger.error(
-                        f"Error creating contact: Phone number does not start with country code"
+                        "Error creating contact: Phone number does not start with country code"
                     )
                     return {
                         "error": "Phone number must start with an international country code (+NNN)"
                     }, 400
                 elif not Contact.validate_phone_number(phone_number):
                     logger.error(
-                        f"Error creating contact: Phone number is not in valid format"
+                        "Error creating contact: Phone number is not in valid format"
                     )
                     return {
                         "error": "Phone number does not appear to be valid, please check and resubmit"
