@@ -8,3 +8,5 @@ flask run
 ```
 
 It should start running by default on http://127.0.0.1:5000. The swagger API documentation is available at the root domain and should show up if you run it in a browser.
+
+Tested with Python 3.12
